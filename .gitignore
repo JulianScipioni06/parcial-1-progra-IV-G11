@@ -20,3 +20,5 @@ coverage/
 # Cosas del sistema operativo (por si alguno usa Mac o Windows)
 .DS_Store
 Thumbs.db
+
+data/
