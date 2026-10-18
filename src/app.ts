@@ -1,11 +1,9 @@
 import express, { Express } from 'express';
 import { createDb, seedDb } from './db/connection';
 
-// 1. Importamos tus repositorios
 import { ProductoRepository } from './repositories/ProductoRepository';
 import { PedidoRepository } from './repositories/PedidoRepository';
 
-// 2. Importamos las rutas de los chicos
 import { makeProductosRouter } from './routes/productos.routes';
 import { makePedidosRouter } from './routes/pedidos.routes';
 import { makeReportesRouter } from './routes/reportes.routes';
