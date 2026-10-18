@@ -52,8 +52,20 @@ export class PedidoController {
         res.status(200).json(pedido);
     };
 
-    facturacion = (req: Request, res: Response) => {
-        res.status(200).json({ facturacionTotal: this.pedidoRepo.calcularFacturacionTotal() });
+        facturacion = (req: Request, res: Response) => {
+        const pedidos = this.pedidoRepo.obtenerTodos();
+        let total = 0;
+
+        for (const pedido of pedidos) {
+            for (const item of pedido.items) {
+                const producto = this.productoRepo.obtenerPorId(Number(item.producto_id));
+                if (producto) {
+                    total += producto.calcularPrecio() * item.cantidad;
+                }
+            }
+        }
+
+        res.status(200).json({ facturacionTotal: total });
     };
 
     masVendido = (req: Request, res: Response) => {
