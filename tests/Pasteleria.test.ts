@@ -5,7 +5,7 @@ import { Pasteleria } from '../src/models/Pasteleria';
 describe('Pasteleria', () => {
     it('calcula el precio de un muffin de chocolate', () => {
         const muffin = new Pasteleria(
-        '1',
+        1,
         'Muffin de chocolate',
         2500
         );
@@ -15,7 +15,7 @@ describe('Pasteleria', () => {
 
     it('calcula el precio de una torta selva negra', () => {
         const torta = new Pasteleria(
-        '2',
+        2,
         'Torta selva negra',
         4200
         );

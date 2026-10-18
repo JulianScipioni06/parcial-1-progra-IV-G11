@@ -3,7 +3,7 @@ import { VariedadCafe, TamanioCafe } from './Expreso';
 
 export class Filtrado extends Producto {
     constructor(
-        id: string, 
+        id: number, 
         nombre: string, 
         precioBase: number, 
         public tamanio: TamanioCafe, 

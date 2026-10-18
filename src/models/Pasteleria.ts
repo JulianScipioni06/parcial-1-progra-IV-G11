@@ -3,7 +3,7 @@ import { Producto } from './Producto';
 
 export class Pasteleria extends Producto {
     constructor(
-        id: string,
+        id: number,
         nombre: string,
         precioBase: number
     ) {

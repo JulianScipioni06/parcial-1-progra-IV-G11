@@ -26,7 +26,7 @@ export class ProductoRepository {
         return rows.map(row => this.mapRowToProducto(row));
     }
 
-    obtenerPorId(id: string): Producto | null {
+    obtenerPorId(id: number): Producto | null {
         const stmt = this.db.prepare('SELECT * FROM productos WHERE id = ?');
         const row = stmt.get(id);
         if (!row) return null;

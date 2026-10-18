@@ -20,7 +20,7 @@ export class Pedido{
 
     public agregarItem(producto: Producto, cantidad: number): void{
         if (this.estado !== 'pendiente') {
-            throw new Error("No se pueden agregar items a un pedido que no está pendiente");
+            throw new Error("El pedido ya fue entregado");
         }
         if (!producto || !Number.isInteger(cantidad) || cantidad <= 0) {
             throw new Error("Producto inválido o cantidad no válida");

@@ -1,7 +1,7 @@
 import {Producto} from "./Producto";
 
 export class PedidoItem{
-    public productoId: string;
+    public productoId: number;
     public cantidad: number;
     public producto: Producto;
 

@@ -1,22 +1,22 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { PedidoItem } from '../src/models/PedidoItem'; 
-import { Cafe } from '../src/models/Cafe';
+import { Filtrado } from '../src/models/Filtrado';
 import { Pasteleria } from '../src/models/Pasteleria';
 
 describe('PedidoItem', () => {
-    let cafe: Cafe;
+    let filtrado: Filtrado;
     let pasteleria: Pasteleria;
 
     beforeEach(() => {
-        cafe = new Cafe('c-etiopia', 'Filtrado', 3200, 'Taza grande', 25, 'Etiopía'); 
-        pasteleria = new Pasteleria('p-selva', 'Torta selva negra', 4200);
+        filtrado = new Filtrado(9, 'Filtrado', 3200, 'Taza grande', 25, 'Etiopía'); 
+        pasteleria = new Pasteleria(2, 'Torta selva negra', 4200);
     });
 
     it('debería crear un PedidoItem correctamente con datos válidos', () => {
-        const item = new PedidoItem(cafe, 2); 
-        expect(item.productoId).toBe('c-etiopia'); 
+        const item = new PedidoItem(filtrado, 2); 
+        expect(item.productoId).toBe(9); 
         expect(item.cantidad).toBe(2); 
-        expect(item.producto).toBe(cafe); 
+        expect(item.producto).toBe(filtrado); 
     });
 
     it('debería lanzar un error si el producto no es válido', () => {
@@ -24,7 +24,7 @@ describe('PedidoItem', () => {
     });
 
     it('debería calcular el subtotal correctamente según los datos de la tabla', () => {
-        const itemCafe = new PedidoItem(cafe, 2); 
+        const itemCafe = new PedidoItem(filtrado, 2); 
         expect(itemCafe.calcularSubtotal()).toBe(18400); 
 
         const itemPasteleria = new PedidoItem(pasteleria, 3); 
@@ -32,7 +32,7 @@ describe('PedidoItem', () => {
     });
 
     it('debería sumar cantidad adicional correctamente', () => {
-        const item = new PedidoItem(cafe, 2); 
+        const item = new PedidoItem(filtrado, 2); 
         item.sumarCantidad(3); 
         expect(item.cantidad).toBe(5); 
     });

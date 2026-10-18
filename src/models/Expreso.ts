@@ -5,7 +5,7 @@ export type TamanioCafe = 'Pocillo' | 'Mediano' | 'Taza grande';
 
 export class Expreso extends Producto {
     constructor(
-        id: string, 
+        id: number, 
         nombre: string, 
         precioBase: number, 
         public tamanio: TamanioCafe, 

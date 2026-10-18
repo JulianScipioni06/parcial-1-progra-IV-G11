@@ -1,26 +1,37 @@
-import express, {Express} from 'express';
+import express, { Express } from 'express';
 import { createDb, seedDb } from './db/connection';
-// Más adelante acá importaremos las rutas y los repositorios
+
+// 1. Importamos tus repositorios
+import { ProductoRepository } from './repositories/ProductoRepository';
+import { PedidoRepository } from './repositories/PedidoRepository';
+
+// 2. Importamos las rutas de los chicos
+import { makeProductosRouter } from './routes/productos.routes';
+import { makePedidosRouter } from './routes/pedidos.routes';
+import { makeReportesRouter } from './routes/reportes.routes';
 
 export function makeApp(dbPath?: string): Express {
     const app = express();
     app.use(express.json());
 
-    // Si estamos testeando usamos la RAM, si no, creamos un archivo físico como en el TP2
+    // Si estamos testeando usamos la RAM, si no, creamos un archivo físico
     const resolvedPath = dbPath ?? (process.env.NODE_ENV === 'test' ? ':memory:' : 'data/origen.sqlite');
     
-    // 1. Creamos la base de datos y las tablas
+    // Creamos la base de datos y la llenamos
     const db = createDb(resolvedPath);
-    
-    // 2. La llenamos con los cafés y pastelería del parcial
     seedDb(db);
 
-    // Endpoint de prueba para ver que el server anda
+    const productoRepo = new ProductoRepository(db);
+    const pedidoRepo = new PedidoRepository(db);
+
+    // Endpoint de prueba
     app.get('/health', (_req, res) => res.json({ status: 'ok', message: 'API Cafetería Origen lista' }));
 
-    // En el próximo paso conectaremos acá los endpoints:
-    // app.use('/productos', makeProductosRouter(...));
-    // app.use('/pedidos', makePedidosRouter(...));
+    // 4. Conectamos todas las rutas inyectando los repositorios correctos
+    app.use('/productos', makeProductosRouter(productoRepo));
+    
+    app.use('/pedidos', makePedidosRouter(pedidoRepo, productoRepo));
+    app.use('/reportes', makeReportesRouter(pedidoRepo, productoRepo));
 
     return app;
 }
