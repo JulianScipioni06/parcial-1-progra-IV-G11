@@ -22,4 +22,9 @@ describe('Pasteleria', () => {
 
         expect(torta.calcularPrecio()).toBe(4200);
     });
+
+    it('debe tener la propiedad tipo con el valor pasteleria', () => {
+    const muffin = new Pasteleria(1, 'Muffin de chocolate', 2500);
+    expect(muffin.tipo).toBe('pasteleria');
+});
 });
