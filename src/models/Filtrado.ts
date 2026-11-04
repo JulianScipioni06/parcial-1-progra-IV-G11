@@ -1,5 +1,6 @@
 import { Producto } from './Producto';
 import { TamanioCafe } from './Expreso';
+import { VariedadCafe } from './VariedadCafe';
 
 export class Filtrado extends Producto {
     public tipo = 'filtrado'
@@ -10,7 +11,7 @@ export class Filtrado extends Producto {
         precioBase: number, 
         public tamanio: TamanioCafe, 
         public gramos: number, 
-        public variedad: any
+        public variedad: VariedadCafe
     ) {
         super(id, nombre, precioBase);
     }
