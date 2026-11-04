@@ -11,7 +11,7 @@ export class Expreso extends Producto {
         precioBase: number, 
         public tamanio: TamanioCafe, 
         public gramos: number, 
-        public variedad: any
+        public variedad: VariedadCafe
     ) {
         super(id, nombre, precioBase);
     }
