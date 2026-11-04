@@ -11,4 +11,17 @@ describe('Filtrado', () => {
         const filtrado = new Filtrado(9, 'Filtrado', 3200, 'Taza grande', 25, 'Etiopía');
         expect(filtrado.calcularPrecio()).toBe(9200);
     });
+
+    it('debe tener tipo filtrado y recibir una variedad estructurada', () => {
+        const variedadPrueba = { 
+            nombre: 'Colombia', 
+            descripcion: 'Acidez media, notas cítricas y florales',
+            precioPorGramo: 180
+        };
+        
+        const filtrado = new Filtrado(10, 'Filtrado', 3200, 'Mediano', 15, variedadPrueba as any);
+        
+        expect(filtrado.tipo).toBe('filtrado');
+        expect(filtrado.variedad.descripcion).toBe('Acidez media, notas cítricas y florales');
+    });
 });
