@@ -16,4 +16,18 @@ describe('Expreso', () => {
         const expreso = new Expreso(5, 'Expreso', 2500, 'Pocillo', 18, 'Etiopía');
         expect(expreso.calcularPrecio()).toBe(6820);
     });
+    it('debe tener tipo expreso y recibir una variedad estructurada', () => {
+        // Inventamos el objeto como queremos que sea en el futuro
+        const variedadPrueba = { 
+            nombre: 'Brasil', 
+            descripcion: 'Acidez baja, cuerpo denso y notas de avellana',
+            precioPorGramo: 140
+        };
+        
+        // Acá TypeScript va a chillar porque Expreso espera un string
+        const expreso = new Expreso(3, 'Expreso', 2500, 'Pocillo', 18, variedadPrueba as any);
+        
+        expect(expreso.tipo).toBe('expreso');
+        expect(expreso.variedad.descripcion).toBe('Acidez baja, cuerpo denso y notas de avellana');
+    });
 });
