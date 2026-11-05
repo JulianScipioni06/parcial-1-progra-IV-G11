@@ -11,7 +11,7 @@ testApp.use(cors());
 // Middleware para manejar errores
 testApp.get('/ruta-provocada', (req: Request, res: Response, next: NextFunction) => {
     const error = new Error('Fallo provocado')  as AppError;
-    error.status = 404;
+    error.status = 400;
     next(error);
 });
 
