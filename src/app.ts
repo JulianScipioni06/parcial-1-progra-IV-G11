@@ -31,5 +31,42 @@ export function makeApp(dbPath?: string): Express {
     app.use('/pedidos', makePedidosRouter(pedidoRepo, productoRepo));
     app.use('/reportes', makeReportesRouter(pedidoRepo, productoRepo));
 
+
+    const testRouter = express.Router();
+
+    // Middleware de seguridad: bloquea el acceso si no estamos en test
+    testRouter.use((req, res, next) => {
+        if (process.env.NODE_ENV !== 'test') {
+            return res.status(404).json({ error: 'Ruta no permitida fuera del entorno de pruebas' });
+        }
+        next();
+    });
+
+    // Ruta Reset: Vacía las tablas de la base de datos
+    testRouter.post('/reset', (req, res) => {
+        try {
+            db.exec(`
+                DELETE FROM pedido_items;
+                DELETE FROM pedidos;
+                DELETE FROM productos;
+            `);
+            res.status(200).json({ mensaje: 'Base de datos reiniciada' });
+        } catch (error) {
+            res.status(500).json({ error: 'Error al reiniciar la base de datos' });
+        }
+    });
+
+    // Ruta Seed: Vuelve a llenar la base de datos con los productos
+    testRouter.post('/seed', (req, res) => {
+        try {
+            seedDb(db); 
+            res.status(200).json({ mensaje: 'Datos precargados' });
+        } catch (error) {
+            res.status(500).json({ error: 'Error al precargar los datos' });
+        }
+    });
+
+    app.use('/__test__', testRouter);
+
     return app;
 }
