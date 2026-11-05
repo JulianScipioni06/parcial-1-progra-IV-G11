@@ -30,7 +30,7 @@ export class PedidoController {
             this.pedidoRepo.guardar(nuevoPedido);
             
             res.status(201).json({
-                pedido: nuevoPedido,
+                id: nuevoPedido.id,
                 mesaId: nuevoPedido.mesaId,
                 estado: nuevoPedido.estado,
                 items: items,
@@ -51,10 +51,30 @@ export class PedidoController {
 
     obtenerPorId = (req: Request, res: Response) => {
         const id = Number(req.params.id);
-        // Asumiendo que armaste un obtenerPorId() en tu PedidoRepository
-        const pedido = this.pedidoRepo.obtenerPorId(id);
-        if (!pedido) return res.status(404).json({ error: 'Pedido no encontrado' });
-        res.status(200).json(pedido);
+        const pedidoBd = this.pedidoRepo.obtenerPorId(id);
+        if (!pedidoBd) {
+            return res.status(404).json({ error: 'Pedido no encontrado' });
+        }
+
+        let total = 0;
+        const itemsFormateados = [];
+        for (const item of pedidoBd.items) {
+            const producto = this.productoRepo.obtenerPorId(Number(item.producto_id));
+            if (producto) {
+                total += producto.calcularPrecio() * item.cantidad;
+                itemsFormateados.push({
+                    productoId: producto.id,
+                    cantidad: item.cantidad
+                });
+            }
+        }
+        res.status(200).json({
+            id: pedidoBd.id,
+            mesaId: pedidoBd.mesaId ?? undefined,
+            estado: pedidoBd.estado,
+            items: itemsFormateados,
+            total: total
+        });
     };
 
         facturacion = (req: Request, res: Response) => {

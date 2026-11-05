@@ -29,6 +29,7 @@ describe('GET /pedidos/:id (Seguimiento)', () => {
             })
         });
         const pedidoCreado = await postRes.json();
+        console.log('Pedido creado:', pedidoCreado);
 
         // consultamos el endpoint por ID
         const response = await fetch(`${baseUrl}/pedidos/${pedidoCreado.id}`);
