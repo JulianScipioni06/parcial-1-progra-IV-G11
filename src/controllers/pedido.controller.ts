@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import e, { Request, Response } from 'express';
 import { PedidoRepository } from '../repositories/PedidoRepository';
 import { ProductoRepository } from '../repositories/ProductoRepository';
 import { Pedido } from '../models/Pedido';
@@ -11,11 +11,12 @@ export class PedidoController {
     ) {}
 
     crear = (req: Request, res: Response) => {
-        const { items } = req.body;
+        const { items, mesaId } = req.body;
         if (!items || !items.length) return res.status(400).json({ error: 'Faltan items' });
         
         try {
             const nuevoPedido = new Pedido();
+            nuevoPedido.mesaId = mesaId;
 
             for (const item of items) {
                 const productoReal = this.productoRepo.obtenerPorId(Number(item.productoId));
@@ -25,10 +26,14 @@ export class PedidoController {
                 nuevoPedido.agregarItem(productoReal, item.cantidad);
             }
 
+            nuevoPedido.id = this.pedidoRepo.obtenerTodos().length + 1; // asignamos un ID simple basado en la cantidad de pedidos existentes   
             this.pedidoRepo.guardar(nuevoPedido);
             
             res.status(201).json({
                 pedido: nuevoPedido,
+                mesaId: nuevoPedido.mesaId,
+                estado: nuevoPedido.estado,
+                items: items,
                 total: nuevoPedido.calcularTotal() 
             });
         } catch (error) {

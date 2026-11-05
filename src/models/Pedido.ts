@@ -7,15 +7,18 @@ export class Pedido{
     public id: number;
     public items: PedidoItem[];
     public estado: EstadoPedido;
+    public mesaId?: number | undefined;
 
     constructor(
         id: number = 0,
         items: PedidoItem[] = [],
-        estado: EstadoPedido = 'pendiente'
+        estado: EstadoPedido = 'pendiente',
+        mesaId?: number | undefined
     ){
         this.id = id;
         this.items = items;
         this.estado = estado;
+        this.mesaId = mesaId;
     }
 
     public agregarItem(producto: Producto, cantidad: number): void{

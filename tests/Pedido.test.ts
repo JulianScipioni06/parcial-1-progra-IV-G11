@@ -10,7 +10,12 @@ describe('Pedido', () => {
 
     beforeEach(() => {
         pedido = new Pedido(); 
-        filtrado = new Filtrado(9, 'Filtrado', 3200, 'Taza grande', 25, 'Etiopía');
+        const variedadEtiopia = {
+            nombre: 'Etiopía',
+            descripcion: 'Acidez muy viva, notas frutales',
+            precioPorGramo: 240
+        };
+        filtrado = new Filtrado(9, 'Filtrado', 3200, 'Taza grande', 25, variedadEtiopia);
         pasteleria = new Pasteleria(2, 'Torta selva negra', 4200); 
     });
 

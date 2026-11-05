@@ -19,6 +19,7 @@ export function createDb(path: string = ':memory:'): Database.Database {
 
         CREATE TABLE IF NOT EXISTS pedidos (
         id INTEGER PRIMARY KEY,
+        mesaId INTEGER,
         estado TEXT NOT NULL DEFAULT 'Pendiente'
         );
 
