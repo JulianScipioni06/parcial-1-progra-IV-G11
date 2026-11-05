@@ -32,4 +32,8 @@ export class ProductoRepository {
         if (!row) return null;
         return this.mapRowToProducto(row);
     }
+
+    conPrecio(producto: Producto) {
+        return { ...producto, precio: producto.calcularPrecio() };
+    }
 }
