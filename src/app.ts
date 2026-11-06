@@ -7,6 +7,7 @@ import { PedidoRepository } from './repositories/PedidoRepository';
 import { makeProductosRouter } from './routes/productos.routes';
 import { makePedidosRouter } from './routes/pedidos.routes';
 import { makeReportesRouter } from './routes/reportes.routes';
+import { makeTestRouter } from './routes/e2e.routes'; 
 
 export function makeApp(dbPath?: string): Express {
     const app = express();
@@ -30,6 +31,8 @@ export function makeApp(dbPath?: string): Express {
     
     app.use('/pedidos', makePedidosRouter(pedidoRepo, productoRepo));
     app.use('/reportes', makeReportesRouter(pedidoRepo, productoRepo));
+
+    app.use('/__test__', makeTestRouter(db));
 
     return app;
 }
