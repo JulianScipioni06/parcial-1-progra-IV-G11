@@ -6,7 +6,7 @@ export class PedidoRepository {
 
     guardar(pedido: Pedido): void {
         const insertPedido = this.db.prepare(`
-            INSERT INTO pedidos (id, estado) VALUES (?, ?)
+            INSERT INTO pedidos (id, estado, mesaId) VALUES (?, ?, ?)
         `);
         
         const insertItem = this.db.prepare(`
@@ -15,7 +15,7 @@ export class PedidoRepository {
         `);
 
         const transaction = this.db.transaction(() => {
-            insertPedido.run(pedido.id, pedido.estado);
+            insertPedido.run(pedido.id, pedido.estado, pedido.mesaId ?? null);
 
             for (const item of pedido.items) {
                 insertItem.run(pedido.id, item.producto.id, item.cantidad);
